@@ -1,40 +1,87 @@
+// src/components/TreeCanvas.js
 import React from 'react';
 
-function TreeCanvas({ root, highlightedNode }) {
-  // Recursive function to render nodes and edges
-  const renderNode = (node, x, y, levelGap) => {
-    if (!node) return null;
+const renderTree = (node, x = 400, y = 50, level = 0, highlighted) => {
+  if (!node || node.value === 'null') return [];
 
-    const nodeRadius = 20;
-    const childY = y + levelGap;
-    return (
-      <g key={node.value}>
-        {/* Draw lines to children */}
-        {node.left && <line x1={x} y1={y} x2={x - 60} y2={childY} stroke="black" />}
-        {node.right && <line x1={x} y1={y} x2={x + 60} y2={childY} stroke="black" />}
-        
-        {/* Draw current node */}
-        <circle
-          cx={x}
-          cy={y}
-          r={nodeRadius}
-          fill={highlightedNode === node ? 'orange' : 'skyblue'}
-          stroke="black"
-        />
-        <text x={x} y={y + 5} textAnchor="middle">{node.value}</text>
+  const radius = 20;
+  const xOffset = 150 / (level + 1); // spread nodes horizontally
+  const yOffset = 80;
 
-        {/* Recursively render children */}
-        {renderNode(node.left, x - 60, childY, levelGap)}
-        {renderNode(node.right, x + 60, childY, levelGap)}
-      </g>
+  const elements = [];
+
+  const isHighlighted = node.value === highlighted;
+
+  elements.push(
+    <circle
+      key={`circle-${node.id}`}
+      cx={x}
+      cy={y}
+      r={radius}
+      fill={isHighlighted ? 'orange' : 'lightblue'}
+      stroke="black"
+    />
+  );
+
+  elements.push(
+    <text
+      key={`text-${node.id}`}
+      x={x}
+      y={y + 5}
+      textAnchor="middle"
+      fontSize="12"
+    >
+      {node.value}
+    </text>
+  );
+
+  const [left, right] = node.children;
+
+  if (left && left.value !== 'null') {
+    const childX = x - xOffset;
+    const childY = y + yOffset;
+
+    elements.push(
+      <line
+        key={`line-left-${node.id}`}
+        x1={x}
+        y1={y + radius}
+        x2={childX}
+        y2={childY - radius}
+        stroke="black"
+      />
     );
-  };
+    elements.push(...renderTree(left, childX, childY, level + 1, highlighted));
+  }
+
+  if (right && right.value !== 'null') {
+    const childX = x + xOffset;
+    const childY = y + yOffset;
+
+    elements.push(
+      <line
+        key={`line-right-${node.id}`}
+        x1={x}
+        y1={y + radius}
+        x2={childX}
+        y2={childY - radius}
+        stroke="black"
+      />
+    );
+    elements.push(...renderTree(right, childX, childY, level + 1, highlighted));
+  }
+
+  return elements;
+};
+
+const TreeCanvas = ({ tree, highlighted }) => {
+  if (!tree) return <p>No tree to display.</p>;
 
   return (
-    <svg width="100%" height="400">
-      {renderNode(root, 300, 50, 80)}
+    <svg width="100%" height="500">
+      {renderTree(tree, 400, 50, 0, highlighted)}
     </svg>
   );
-}
+};
 
 export default TreeCanvas;

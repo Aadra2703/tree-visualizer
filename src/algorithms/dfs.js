@@ -1,4 +1,4 @@
-export const dfs = async (root, setHighlightedNode) => {
+export const runDFS = async (root, setHighlightedNode) => {
   const dfsHelper = async (node) => {
     if (!node || node.value === 'null') return;
     setHighlightedNode(node.value);

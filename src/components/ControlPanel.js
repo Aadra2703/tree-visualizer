@@ -1,11 +1,12 @@
 // src/components/ControlPanel.js
 import React, { useState } from 'react';
 
-const ControlPanel = ({ onAddNode, onDeleteNode, onTraverse, onReset, isEmpty }) => {
+const ControlPanel = ({ onAddNode, onDeleteNode, onTraverse, onReset, isEmpty,onRunAlgorithm }) => {
   const [nodeValue, setNodeValue] = useState('');
   const [parentValue, setParentValue] = useState('');
   const [position, setPosition] = useState('left');
   const [deleteValue, setDeleteValue] = useState('');
+  const [selectedAlgorithm, setSelectedAlgorithm] = useState("dfs");
 
   const handleAdd = () => {
     if (!nodeValue) return alert('Enter node value!');
@@ -19,6 +20,10 @@ const ControlPanel = ({ onAddNode, onDeleteNode, onTraverse, onReset, isEmpty })
     if (!deleteValue) return alert('Enter value to delete!');
     onDeleteNode(deleteValue);
     setDeleteValue('');
+  };
+
+  const handleRunAlgorithm = () => {
+    onRunAlgorithm(selectedAlgorithm);
   };
 
   return (
@@ -60,6 +65,20 @@ const ControlPanel = ({ onAddNode, onDeleteNode, onTraverse, onReset, isEmpty })
         <button onClick={() => onTraverse('bfs')}>BFS</button>
         <button onClick={onReset}>Reset</button>
       </div>
+
+      <h3>Run Algorithm</h3>
+      <select
+        value={selectedAlgorithm}
+        onChange={(e) => setSelectedAlgorithm(e.target.value)}
+      >
+        <option value="dfs">Depth-First Search (DFS)</option>
+        <option value="bfs">Breadth-First Search (BFS)</option>
+        <option value="levelorder">Level Order Traversal</option>
+        <option value="inorder">Inorder Traversal</option>
+        <option value="postorder">Postorder Traversal</option>
+        {/* You can add more here */}
+      </select>
+      <button onClick={handleRunAlgorithm}>Run Algorithm</button>
     </div>
   );
 };

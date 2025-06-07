@@ -1,4 +1,4 @@
-export const bfs = async (root, setHighlightedNode) => {
+export const runBFS = async (root, setHighlightedNode) => {
   if (!root) return;
   const queue = [root];
 

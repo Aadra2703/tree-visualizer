@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import TreeCanvas from './components/TreeCanvas';
 import ControlPanel from './components/ControlPanel';
-import { bfs } from './algorithms/bfs';
-import { dfs } from './algorithms/dfs';
+import { runDFS } from "./algorithms/dfs";
+import { runBFS } from "./algorithms/bfs";
+import { runLevelOrder } from "./algorithms/levelOrder";
+import { runInorder } from "./algorithms/inorder";
+import { runPostorder } from "./algorithms/postorder";
+
 
 // Define TreeNode class or structure here or import from a helper file
 class TreeNode {
@@ -123,20 +127,41 @@ const deleteLeafNode = (node, target) => {
   );
 };
 
-
-
-  const handleTraversal = (type) => {
-  if (!treeData) {
-    alert("Tree is empty!");
-    return;
-  }
-
-  if (type === 'bfs') {
-    bfs(treeData, setHighlighted);
-  } else {
-    dfs(treeData, setHighlighted);
+const handleRunAlgorithm = (algorithm) => {
+  switch (algorithm) {
+    case "dfs":
+      runDFS(treeData, setHighlighted);
+      break;
+    case "bfs":
+      runBFS(treeData, setHighlighted);
+      break;
+    case "levelorder":
+      runLevelOrder(treeData, setHighlighted);
+      break;
+    case "inorder":
+      runInorder(treeData, setHighlighted);
+      break;
+    case "postorder":
+      runPostorder(treeData, setHighlighted);
+      break;
+    default:
+      alert("Algorithm not implemented.");
   }
 };
+
+
+//   const handleTraversal = (type) => {
+//   if (!treeData) {
+//     alert("Tree is empty!");
+//     return;
+//   }
+
+//   if (type === 'bfs') {
+//     bfs(treeData, setHighlighted);
+//   } else {
+//     dfs(treeData, setHighlighted);
+//   }
+// };
 
   // const handleReset = () => {
   //   setHighlighted(null);
@@ -177,9 +202,10 @@ const deleteLeafNode = (node, target) => {
       <ControlPanel
         onAddNode={handleAddNode}
         onDeleteNode={handleDeleteNode}
-        onTraverse={handleTraversal}
+        //onTraverse={handleTraversal}
         onReset={handleReset}
         isEmpty={!treeData}
+        onRunAlgorithm={handleRunAlgorithm}
       />
       {/* <div style={{ marginTop: "20px" }}>
         <button onClick={() => handleTraversal('bfs')}>Run BFS</button>

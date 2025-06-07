@@ -74,6 +74,7 @@ const renderTree = (node, x = 400, y = 50, level = 0, highlighted) => {
   return elements;
 };
 
+
 const TreeCanvas = ({ tree, highlighted }) => {
   if (!tree) return <p>No tree to display.</p>;
 

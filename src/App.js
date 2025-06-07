@@ -17,6 +17,8 @@ function App() {
   // Build sample tree
   const [treeData, setTreeData] = useState(null); // null = empty tree
   const [highlighted, setHighlighted] = useState(null);
+  const [inputValue, setInputValue] = useState("");
+
   <TreeCanvas tree={treeData} highlighted={highlighted} />
   const handleAddNode = (value, parentValue, position) => {
     if (value.toLowerCase() === 'null') return; // skip inserting if user enters "null"
@@ -75,30 +77,53 @@ function App() {
     return false;
   };
 
-  const handleDeleteNode = (valueToDelete) => {
-    if (!treeData) return;
+    const handleDeleteNode = (value) => {
+        if (!treeData || value === "") return;
 
-    if (treeData.value === valueToDelete) {
-      setTreeData(null); // deleting root
-      return;
-    }
+        const newTree = JSON.parse(JSON.stringify(treeData));
+        const deleted = deleteLeafNode(newTree, value);
 
-    const newTree = JSON.parse(JSON.stringify(treeData));
-    const deleted = deleteNode(newTree, valueToDelete);
-    if (deleted) {
-      setTreeData(newTree);
-    } else {
-      alert(`Node ${valueToDelete} not found!`);
-    }
-  };
+        if (deleted) {
+          setTreeData(newTree.value === "null" ? null : { ...newTree }); // 👈 Force rerender
+        } else {
+          alert("Node either not found or not a leaf node.");
+        }
+      };
 
-  const deleteNode = (node, valueToDelete) => {
-    node.children = node.children.filter((child) => child?.value !== valueToDelete);
-    for (let child of node.children) {
-      if (deleteNode(child, valueToDelete)) return true;
-    }
-    return false;
-  };
+      
+
+
+const deleteLeafNode = (node, target) => {
+  if (!node || node.value === "null") return false;
+
+  // Try deleting left child
+  if (
+    node.children?.[0] &&
+    node.children[0].value === target &&
+    node.children[0].children?.every(c => !c || c.value === "null")
+  ) {
+    node.children[0] = { id: Date.now(), value: "null" };
+    return true;
+  }
+
+  // Try deleting right child
+  if (
+    node.children?.[1] &&
+    node.children[1].value === target &&
+    node.children[1].children?.every(c => !c || c.value === "null")
+  ) {
+    node.children[1] = { id: Date.now(), value: "null" };
+    return true;
+  }
+
+  // Recurse
+  return (
+    deleteLeafNode(node.children?.[0], target) ||
+    deleteLeafNode(node.children?.[1], target)
+  );
+};
+
+
 
   const handleTraversal = (type) => {
   if (!treeData) {
@@ -156,13 +181,18 @@ function App() {
         onReset={handleReset}
         isEmpty={!treeData}
       />
-      <div style={{ marginTop: "20px" }}>
+      {/* <div style={{ marginTop: "20px" }}>
         <button onClick={() => handleTraversal('bfs')}>Run BFS</button>
         <button onClick={() => handleTraversal('dfs')}>Run DFS</button>
-      </div>
+      </div> */}
       <TreeCanvas tree={treeData} highlighted={highlighted} />
     </div>
   );
 }
 
 export default App;
+{/* <ControlPanel
+        onInsertNode={handleInsert}
+        onDeleteNode={handleDeleteNode} // ✅ passed here
+        onTraverse={handleTraverse}
+      /> */}

@@ -7,7 +7,7 @@ export function runLevelOrder(root, setHighlight) {
       const node = queue.shift();
       if (node.value === "null") continue;
 
-      setHighlight(node.id);
+      setHighlight(node.value);
       await new Promise((res) => setTimeout(res, 800));
 
       node.children?.forEach((child) => {

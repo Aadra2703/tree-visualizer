@@ -4,7 +4,7 @@ export function runPostorder(root, setHighlight) {
 
     await traverse(node.children?.[0]); // left
     await traverse(node.children?.[1]); // right
-    setHighlight(node.id);
+    setHighlight(node.value);
     await new Promise((res) => setTimeout(res, 800)); // Pause for visual
   };
 

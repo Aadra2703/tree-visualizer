@@ -61,8 +61,6 @@ const ControlPanel = ({ onAddNode, onDeleteNode, onTraverse, onReset, isEmpty,on
       <button onClick={handleDelete}>Delete</button>
 
       <div style={{ marginTop: '10px' }}>
-        <button onClick={() => onTraverse('dfs')}>DFS</button>
-        <button onClick={() => onTraverse('bfs')}>BFS</button>
         <button onClick={onReset}>Reset</button>
       </div>
 
@@ -72,10 +70,14 @@ const ControlPanel = ({ onAddNode, onDeleteNode, onTraverse, onReset, isEmpty,on
         onChange={(e) => setSelectedAlgorithm(e.target.value)}
       >
         <option value="dfs">Depth-First Search (DFS)</option>
-        <option value="bfs">Breadth-First Search (BFS)</option>
         <option value="levelorder">Level Order Traversal</option>
+        <option value="bfs">Breadth-First Search (BFS)</option>
+        <option value="boundaryorder">Boundary Order Traversal</option>
+        <option value="preorder">Preorder Traversal</option>
+        <option value="verticalorder">Vertical Order Traversal</option>
         <option value="inorder">Inorder Traversal</option>
         <option value="postorder">Postorder Traversal</option>
+        <option value="zigzag">ZigZag Order Traversal</option>
         {/* You can add more here */}
       </select>
       <button onClick={handleRunAlgorithm}>Run Algorithm</button>

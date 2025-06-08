@@ -3,9 +3,14 @@ import TreeCanvas from './components/TreeCanvas';
 import ControlPanel from './components/ControlPanel';
 import { runDFS } from "./algorithms/dfs";
 import { runBFS } from "./algorithms/bfs";
-import { runLevelOrder } from "./algorithms/levelOrder";
+import { runLevelOrder } from "./algorithms/levelorder";
 import { runInorder } from "./algorithms/inorder";
 import { runPostorder } from "./algorithms/postorder";
+import { runBoundaryOrder } from './algorithms/boundaryOrder';
+import { runPreorder } from './algorithms/preorder';
+import { runVerticalOrder } from './algorithms/verticalOrder';
+import { runZigzagTraversal } from './algorithms/zigzagOrder';
+
 
 
 // Define TreeNode class or structure here or import from a helper file
@@ -144,6 +149,19 @@ const handleRunAlgorithm = (algorithm) => {
     case "postorder":
       runPostorder(treeData, setHighlighted);
       break;
+    case "boundaryorder":
+      runBoundaryOrder(treeData, setHighlighted);
+      break;
+    case "preorder":
+      runPreorder(treeData, setHighlighted);
+      break;
+    case "verticalorder":
+      runVerticalOrder(treeData, setHighlighted);
+      break;
+    case "zigzag":
+      runZigzagTraversal(treeData, setHighlighted);
+      break;  
+
     default:
       alert("Algorithm not implemented.");
   }

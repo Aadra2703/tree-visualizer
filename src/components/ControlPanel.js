@@ -51,19 +51,7 @@ const ControlPanel = ({ onAddNode, onDeleteNode, onTraverse, onReset, isEmpty,on
       )}
       <button onClick={handleAdd}>Add Node</button>
 
-      <h3>Delete Node</h3>
-      <input
-        type="text"
-        placeholder="Node Value"
-        value={deleteValue}
-        onChange={(e) => setDeleteValue(e.target.value)}
-      />
-      <button onClick={handleDelete}>Delete</button>
-
-      <div style={{ marginTop: '10px' }}>
-        <button onClick={onReset}>Reset</button>
-      </div>
-
+      
       <h3>Run Algorithm</h3>
       <select
         value={selectedAlgorithm}
@@ -81,6 +69,19 @@ const ControlPanel = ({ onAddNode, onDeleteNode, onTraverse, onReset, isEmpty,on
         {/* You can add more here */}
       </select>
       <button onClick={handleRunAlgorithm}>Run Algorithm</button>
+      <h3>Delete Node</h3>
+      <input
+        type="text"
+        placeholder="Node Value"
+        value={deleteValue}
+        onChange={(e) => setDeleteValue(e.target.value)}
+      />
+      <button onClick={handleDelete}>Delete</button>
+
+      <div style={{ marginTop: '10px' }}>
+        <button onClick={onReset}>Reset</button>
+      </div>
+
     </div>
   );
 };

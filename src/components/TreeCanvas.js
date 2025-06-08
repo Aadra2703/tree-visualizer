@@ -36,14 +36,14 @@ const renderTree = (node, x, y, level, highlighted, maxDepth, availableWidth) =>
 
   // Calculate responsive scaling
   const baseRadius = 20;
-  const baseFontSize = 12;
+  const baseFontSize = 20;
   const baseYOffset = 70;
   
   // Scale down for very deep trees
   const depthScale = Math.min(1, 6 / Math.max(1, maxDepth - 3));
   
   const radius = Math.max(10, baseRadius * depthScale);
-  const fontSize = Math.max(8, baseFontSize * depthScale);
+  const fontSize = Math.max(10, baseFontSize * depthScale);
   const yOffset = Math.max(50, baseYOffset * depthScale);
   
   // Calculate horizontal spacing based on available width and level
@@ -61,7 +61,7 @@ const renderTree = (node, x, y, level, highlighted, maxDepth, availableWidth) =>
       cx={x}
       cy={y}
       r={radius}
-      fill={isHighlighted ? 'orange' : 'lightblue'}
+      fill={isHighlighted ? '#45a049' : '#444'}
       stroke="black"
       strokeWidth={depthScale}
     />

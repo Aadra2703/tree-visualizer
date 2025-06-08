@@ -10,7 +10,7 @@ import { runBoundaryOrder } from './algorithms/boundaryOrder';
 import { runPreorder } from './algorithms/preorder';
 import { runVerticalOrder } from './algorithms/verticalOrder';
 import { runZigzagTraversal } from './algorithms/zigzagOrder';
-
+import './App.css';
 
 
 // Define TreeNode class or structure here or import from a helper file
@@ -216,20 +216,25 @@ const handleRunAlgorithm = (algorithm) => {
 
   return (
     <div className="App">
-      <h1>Interactive Tree Visualizer</h1>
-      <ControlPanel
+      
+      <div className="ControlPanel">
+        <h2>Interactive Tree Visualizer</h2>
+        <ControlPanel
         onAddNode={handleAddNode}
+        onRunAlgorithm={handleRunAlgorithm}
         onDeleteNode={handleDeleteNode}
         //onTraverse={handleTraversal}
         onReset={handleReset}
         isEmpty={!treeData}
-        onRunAlgorithm={handleRunAlgorithm}
+        
       />
-      {/* <div style={{ marginTop: "20px" }}>
-        <button onClick={() => handleTraversal('bfs')}>Run BFS</button>
-        <button onClick={() => handleTraversal('dfs')}>Run DFS</button>
-      </div> */}
-      <TreeCanvas tree={treeData} highlighted={highlighted} />
+      </div>
+      <div className="VisualizerArea">
+        <TreeCanvas tree={treeData} highlighted={highlighted} />
+      </div>
+      
+    
+      
     </div>
   );
 }
